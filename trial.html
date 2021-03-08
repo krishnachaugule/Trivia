@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Instructor Evaluation</title>
+<style>
+.button {
+display: block;
+margin-top: 10px;
+}
+</style>
+</head>
+<body>
+<form  id="form1">
+<p>The instructor was prepared for class.</p>
+<input type="radio" name="prepared" value="1" /><label for="prepared_one">1</label>
+<input type="radio" name="prepared" value="2" /><label for="prepared_two">2</label>
+<input type="radio" name="prepared" value="3" /><label for="prepared_three">3</label>
+<input type="radio" name="prepared" value="4" /><label for="prepared_four">4</label>
+<input type="radio" name="prepared" value="5" /><label for="prepared_five">5</label>
+
+<p>The topic was interesting to me.</p>
+<input type="radio" name="interesting" value="1" /><label for="int_one">1</label>
+<input type="radio" name="interesting" value="2" /><label for="int_two">2</label>
+<input type="radio" name="interesting" value="3" /><label for="int_three">3</label>
+<input type="radio" name="interesting" value="4" /><label for="int_four">4</label>
+<input type="radio" name="interesting" value="5" /><label for="int_five">5</label>
+  
+
+added a question  
+<p>I will use this material in the future.</p>
+<input type="radio" name="use" value="1" /><label for="use_one">1</label>
+<input type="radio" name="use" value="2" /><label for="use_two">2</label>
+<input type="radio" name="use" value="3" /><label for="use_three">3</label>
+<input type="radio" name="use" value="4" /><label for="use_four">4</label>
+<input type="radio" name="use" value="5" /><label for="use_five">5</label>
+
+
+<button type="submit" value="Submit" class="button">Submit</button>
+</form>
+
+<p>Question 1 Answer: <span id="quest1"></span></p>
+<p>Question 2 Answer: <span id="quest2"></span></p>
+<p>Question 3 Answer: <span id="quest3"></span></p>
+<p>Score Total: <span id="total"></span></p>
+<p>Score Average: <span id="average"></span></p>
+    <p>Average above 3 (Yes or No): <span id="above3"></span></p>
+    <p>Which measures scored 5?: <span id="score5"></span></p>
+
+<script>
+//this is the generic function that submits the form. Name of form above must be the same as id below
+document.getElementById("form1").onsubmit=function() {
+//initialize score 5, due to appending
+    document.getElementById("score5").innerHTML = "";
+//code the rest of your script here
+   scorelist = [];
+
+  q1 = parseInt(document.querySelector('input[name = "prepared"]:checked').value);
+   document.getElementById("quest1").innerHTML = q1;
+scorelist.push(q1);
+   
+  q2 = parseInt(document.querySelector('input[name = "interesting"]:checked').value);
+   document.getElementById("quest2").innerHTML = q2;
+scorelist.push(q2);
+  
+    q3 = parseInt(document.querySelector('input[name = "use"]:checked').value);
+   document.getElementById("quest3").innerHTML = q3;
+scorelist.push(q3);
+  
+  sum = 0;
+  for(i=0; i<scorelist.length; i++){
+    sum = sum +scorelist[i];
+  }
+    
+
+  // this lets us add any number questions and not change the script
+  // number if scorelist is the denominator for the average
+  denom = scorelist.length;
+  console.log(denom);
+  avg = sum/denom;
+  
+  document.getElementById("total").innerHTML = sum;
+  document.getElementById("average").innerHTML = avg;
+  
+  if(avg > 3){
+    document.getElementById("above3").innerHTML = "yes";
+  }
+  else {
+    document.getElementById("above3").innerHTML = "no";
+  }
+  
+  
+
+/* Easy way if you know how many questions, do one for each...
+  if(q1==5) {
+    document.getElementById("score5").innerHTML += "q1 ";
+  }
+  
+  if(q2==5) {
+    document.getElementById("score5").innerHTML += "q2 ";
+  }
+   */
+
+  // pushed to array, if you need to accommodate for any number of questions
+  for (i=0; i<scorelist.length; i++) {
+    if(scorelist[i] == 5) {
+      document.getElementById("score5").innerHTML += "q" + (i+1) + " ";
+    }
+    
+  }
+ 
+
+return false; // required to not refresh the page; just leave this here
+}
+</script>
+
+</body>
+</html>
